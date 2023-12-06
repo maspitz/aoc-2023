@@ -1,4 +1,4 @@
-"""Tests for day DAY_NUMBER of Advent of Code 2022."""
+"""Tests for day DAY_NUMBER of Advent of Code 2023."""
 
 import dayDAY_NUMBER
 

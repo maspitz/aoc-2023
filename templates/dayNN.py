@@ -1,4 +1,4 @@
-"""Solves day DAY_NUMBER, Advent of Code 2022."""
+"""Solves day DAY_NUMBER, Advent of Code 2023."""
 
 from aocd.models import Puzzle
 
@@ -16,7 +16,7 @@ def part_b(input_data: str) -> int:
 
 
 if __name__ == '__main__':
-    puzzle = Puzzle(year=2022, day=DAY_NUMBER)
+    puzzle = Puzzle(year=2023, day=DAY_NUMBER)
 
     print(f"Puzzle {puzzle.year}-12-{puzzle.day:02d}: {puzzle.title}")
     print(f"  Part A: {part_a(puzzle.input_data)}")
