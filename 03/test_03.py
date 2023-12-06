@@ -16,7 +16,7 @@ sample_input_data = """467..114..
 
 sample_solution_a = 4361
 
-sample_solution_b = "Sample solution not entered"
+sample_solution_b = 467835
 
 
 def test_part_a():
