@@ -19,8 +19,17 @@ def part_a(input_data: str) -> int:
 
 def part_b(input_data: str) -> int:
     """Given the puzzle input data, return the solution for part B."""
-
-    return "Solution not implemented"
+    games = [parse_line(line) for line in input_data.split('\n')]
+    matches = [len(set.intersection(wins,picks)) for card, wins, picks in games]
+    N = len(games)
+    cards = [1] * N
+    for i in range(N):
+        lo = i + 1
+        hi = min(lo + matches[i], N)
+        n_copies = cards[i]
+        for j in range(lo, hi):
+            cards[j] += n_copies
+    return sum(cards)
 
 
 if __name__ == '__main__':
