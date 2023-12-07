@@ -12,7 +12,7 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11"""
 
 sample_solution_a = 13
 
-sample_solution_b = "Sample solution not entered"
+sample_solution_b = 30
 
 
 def test_part_a():
