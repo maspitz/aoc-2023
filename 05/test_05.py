@@ -39,7 +39,7 @@ humidity-to-location map:
 
 sample_solution_a = 35
 
-sample_solution_b = "Sample solution not entered"
+sample_solution_b = 46
 
 
 def test_part_a():
