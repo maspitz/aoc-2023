@@ -35,8 +35,7 @@ temperature-to-humidity map:
 
 humidity-to-location map:
 60 56 37
-56 93 4
-"""
+56 93 4"""
 
 sample_solution_a = 35
 
