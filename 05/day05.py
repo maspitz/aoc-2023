@@ -51,11 +51,55 @@ def part_a(input_data: str) -> int:
     locations = [d.value for d in data]
     return min(locations)
 
+def transform_data(data_ranges: list, rules: list) -> list:
+    """Transform a input data ranges according to a list of rules.
+    data_ranges is list of half-open intervals:
+    data_ranges: [[lower_bound, upper_bound], ...]
+
+    rules is a list of transformation rules:
+    rules: [[dst_start, src_start, range_len], ...]
+
+    output is a list of data ranges:
+    [[lower_bound, upper_bound], ...]"""
+
+    input_ranges = data_ranges
+    output_ranges = []
+    for rule in rules:
+        dst_lower, src_lower, transf_len = rule
+        src_upper = src_lower + transf_len
+        offset = dst_lower - src_lower
+        new_input_ranges = []
+        for data_range in input_ranges:
+            data_lower, data_upper = data_range
+            if data_upper <= src_lower or data_lower >= src_upper:
+                new_input_ranges.append(data_range)
+            else:
+                if data_lower < src_lower:
+                    new_input_ranges.append([data_lower, src_lower])
+                if src_upper < data_upper:
+                    new_input_ranges.append([src_upper, data_upper])
+                output_ranges.append([max(src_lower, data_lower) + offset,
+                                         min(src_upper, data_upper) + offset])
+        input_ranges = new_input_ranges
+    output_ranges.extend(input_ranges)
+    return output_ranges
+
 
 def part_b(input_data: str) -> int:
     """Given the puzzle input data, return the solution for part B."""
+    seed_specs, map_specs = parse_input_data(input_data)
+    # Note: seed_ranges are provided as half-open intervals.
+    # I.e., lower <= seed_nums < upper
+    seed_ranges = [(start, start+size) for start, size in
+                   zip(seed_specs[::2], seed_specs[1::2])]
+    data_maps = [map_from_specification(s) for s in map_specs]
+    # Note: in a data_map, each rule in the list rules
+    # consists of three elements: dst_start, src_start, range_len.
 
-    return "Solution not implemented"
+    for dm in data_maps:
+        seed_ranges = transform_data(seed_ranges, dm.rules)
+
+    return min(lo for lo, hi in seed_ranges)
 
 
 if __name__ == '__main__':
