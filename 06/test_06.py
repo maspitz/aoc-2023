@@ -3,9 +3,10 @@
 import day06
 
 # Test data given as a multiline string.
-sample_input_data = """Sample data not entered"""
+sample_input_data = """Time:      7  15   30
+Distance:  9  40  200"""
 
-sample_solution_a = "Sample solution not entered"
+sample_solution_a = 288
 
 sample_solution_b = "Sample solution not entered"
 
