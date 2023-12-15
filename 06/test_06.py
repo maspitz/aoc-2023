@@ -8,7 +8,7 @@ Distance:  9  40  200"""
 
 sample_solution_a = 288
 
-sample_solution_b = "Sample solution not entered"
+sample_solution_b = 71503
 
 
 def test_part_a():
