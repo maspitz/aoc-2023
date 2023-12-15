@@ -13,6 +13,16 @@ def parse_input(input_data: str) -> tuple[list[int],list[int]]:
     dists = [int(t) for t in pdist[0].split()]
     return (times, dists)
 
+def parse_input_part_two(input_data: str) -> tuple[int, int]:
+    """Parse the input data for part two, returning a time and a distance."""
+    lines = input_data.split('\n')
+    ptime = parse("Time:{}",lines[0])
+    time = int("".join(ptime[0].split()))
+    pdist = parse("Distance:{}",lines[1])
+    dist = int("".join(pdist[0].split()))
+    return (time, dist)
+
+
 def ways_to_beat_record(time: int, dist: int) -> int:
     """Return the number of ways to beat a given record distance
     for a race lasting a given time."""
@@ -50,9 +60,9 @@ def part_a(input_data: str) -> int:
 
 def part_b(input_data: str) -> int:
     """Given the puzzle input data, return the solution for part B."""
-
-    return "Solution not implemented"
-
+    time, dist = parse_input_part_two(input_data)
+    ways = ways_to_beat_record(time, dist)
+    return ways
 
 if __name__ == '__main__':
     puzzle = Puzzle(year=2023, day=6)
