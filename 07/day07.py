@@ -15,6 +15,8 @@ class HandType(IntEnum):
 
 card_order = "AKQJT98765432"
 
+card_order_joker = "AKQT98765432J"
+
 def parse_data(input_data: str) -> list[tuple[str, int]]:
     """Convert input string into a list of hands and bids."""
     data = [lines.split(' ') for lines in input_data.split('\n')]
@@ -37,11 +39,50 @@ def hand_type(hand: str) -> HandType:
         return HandType.ONE_PAIR
     return HandType.HIGH_CARD
 
+def hand_type_joker(hand: str) -> HandType:
+    jokers = hand.count('J')
+    if jokers >= 4:
+        return HandType.FIVE_OF_A_KIND
+    rest_hand = hand.replace('J','')
+    c = Counter(rest_hand)
+    mc = c.most_common()
+    if jokers == 3:
+        if mc[0][1] == 2:
+            return HandType.FIVE_OF_A_KIND
+        else:
+            return HandType.FOUR_OF_A_KIND
+    if jokers == 2:
+        if mc[0][1] == 3:
+            return HandType.FIVE_OF_A_KIND
+        elif mc[0][1] == 2:
+            return HandType.FOUR_OF_A_KIND
+        else:
+            return HandType.THREE_OF_A_KIND
+    if jokers == 1:
+        if mc[0][1] == 4:
+            return HandType.FIVE_OF_A_KIND
+        elif mc[0][1] == 3:
+            return HandType.FOUR_OF_A_KIND
+        elif mc[0][1] == 2 and mc[1][1] == 2:
+            return HandType.FULL_HOUSE
+        elif mc[0][1] == 2:
+            return HandType.THREE_OF_A_KIND
+        else:
+            return HandType.ONE_PAIR
+    return hand_type(hand)
+
+
 def card_strength(card: str) -> int:
     return card_order.find(card)
 
+def card_strength_joker(card: str) -> int:
+    return card_order_joker.find(card)
+
 def hand_strength(hand: str) -> tuple[HandType, int, int, int, int, int]:
     return (hand_type(hand),) + tuple(card_strength(card) for card in hand)
+
+def hand_strength_joker(hand: str) -> tuple[HandType, int, int, int, int, int]:
+    return (hand_type_joker(hand),) + tuple(card_strength_joker(card) for card in hand)
 
 def part_a(input_data: str) -> int:
     """Given the puzzle input data, return the solution for part A."""
@@ -52,8 +93,10 @@ def part_a(input_data: str) -> int:
 
 def part_b(input_data: str) -> int:
     """Given the puzzle input data, return the solution for part B."""
-
-    return "Solution not implemented"
+    hands_bids = parse_data(input_data)
+    hands_bids.sort(key=lambda hb: hand_strength_joker(hb[0]), reverse=True)
+    winnings = [rank * hb[1] for rank, hb in enumerate(hands_bids, start=1)]
+    return sum(winnings)
 
 
 if __name__ == '__main__':
