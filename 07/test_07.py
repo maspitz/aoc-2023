@@ -11,7 +11,7 @@ QQQJA 483"""
 
 sample_solution_a = 6440
 
-sample_solution_b = "Sample solution not entered"
+sample_solution_b = 5905
 
 
 def test_part_a():
