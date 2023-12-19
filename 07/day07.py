@@ -24,18 +24,18 @@ def parse_data(input_data: str) -> list[tuple[str, int]]:
 
 def hand_type(hand: str) -> HandType:
     c = Counter(hand)
-    mc = c.most_common()
-    if mc[0][1] == 5:
+    top_two_count = [count for val, count in c.most_common()[:2]]
+    if top_two_count == [5]:
         return HandType.FIVE_OF_A_KIND
-    if mc[0][1] == 4:
+    if top_two_count == [4,1]:
         return HandType.FOUR_OF_A_KIND
-    if mc[0][1] == 3 and mc[1][1] == 2:
+    if top_two_count == [3,2]:
         return HandType.FULL_HOUSE
-    if mc[0][1] == 3:
+    if top_two_count == [3,1]:
         return HandType.THREE_OF_A_KIND
-    if mc[0][1] == 2 and mc[1][1] == 2:
+    if top_two_count == [2,2]:
         return HandType.TWO_PAIR
-    if mc[0][1] == 2:
+    if top_two_count == [2,1]:
         return HandType.ONE_PAIR
     return HandType.HIGH_CARD
 
@@ -45,27 +45,27 @@ def hand_type_joker(hand: str) -> HandType:
         return HandType.FIVE_OF_A_KIND
     rest_hand = hand.replace('J','')
     c = Counter(rest_hand)
-    mc = c.most_common()
+    top_two_count = [count for val, count in c.most_common()[:2]]
     if jokers == 3:
-        if mc[0][1] == 2:
+        if top_two_count == [2]:
             return HandType.FIVE_OF_A_KIND
         else:
             return HandType.FOUR_OF_A_KIND
     if jokers == 2:
-        if mc[0][1] == 3:
+        if top_two_count == [3]:
             return HandType.FIVE_OF_A_KIND
-        elif mc[0][1] == 2:
+        elif top_two_count == [2,1]:
             return HandType.FOUR_OF_A_KIND
         else:
             return HandType.THREE_OF_A_KIND
     if jokers == 1:
-        if mc[0][1] == 4:
+        if top_two_count == [4]:
             return HandType.FIVE_OF_A_KIND
-        elif mc[0][1] == 3:
+        elif top_two_count == [3,1]:
             return HandType.FOUR_OF_A_KIND
-        elif mc[0][1] == 2 and mc[1][1] == 2:
+        elif top_two_count == [2,2]:
             return HandType.FULL_HOUSE
-        elif mc[0][1] == 2:
+        elif top_two_count == [2,1]:
             return HandType.THREE_OF_A_KIND
         else:
             return HandType.ONE_PAIR
@@ -88,14 +88,14 @@ def part_a(input_data: str) -> int:
     """Given the puzzle input data, return the solution for part A."""
     hands_bids = parse_data(input_data)
     hands_bids.sort(key=lambda hb: hand_strength(hb[0]), reverse=True)
-    winnings = [rank * hb[1] for rank, hb in enumerate(hands_bids, start=1)]
+    winnings = [rank * bid for rank, (hand, bid) in enumerate(hands_bids, start=1)]
     return sum(winnings)
 
 def part_b(input_data: str) -> int:
     """Given the puzzle input data, return the solution for part B."""
     hands_bids = parse_data(input_data)
     hands_bids.sort(key=lambda hb: hand_strength_joker(hb[0]), reverse=True)
-    winnings = [rank * hb[1] for rank, hb in enumerate(hands_bids, start=1)]
+    winnings = [rank * bid for rank, (hand, bid) in enumerate(hands_bids, start=1)]
     return sum(winnings)
 
 
