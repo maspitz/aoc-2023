@@ -23,15 +23,26 @@ ZZZ = (ZZZ, ZZZ)"""
 
 sample_solution_a_2 = 6
 
-sample_solution_b = "Sample solution not entered"
+sample_input_data_3 = """LR
+
+11A = (11B, XXX)
+11B = (XXX, 11Z)
+11Z = (11B, XXX)
+22A = (22B, XXX)
+22B = (22C, 22C)
+22C = (22Z, 22Z)
+22Z = (22B, 22B)
+XXX = (XXX, XXX)"""
+
+sample_solution_b = 6
 
 
 def test_part_a():
     """Test the solution on sample data for part A."""
-    assert day08.part_a(sample_input_data_1) == sample_solution_a_2
+    assert day08.part_a(sample_input_data_1) == sample_solution_a_1
     assert day08.part_a(sample_input_data_2) == sample_solution_a_2
 
 
 def test_part_b():
     """Test the solution on sample data for part B."""
-    assert day08.part_b(sample_input_data) == sample_solution_b
+    assert day08.part_b(sample_input_data_3) == sample_solution_b
