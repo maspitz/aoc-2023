@@ -20,6 +20,15 @@ def predict_a(seq: list[int]) -> int:
     return sum(ds[-1] for ds in diff_seq)
 
 
+def predict_b(seq: list[int]) -> int:
+    """Predict the next element in the sequence according to Part One's specifications."""
+    diff_seq = diff_sequences(seq)
+    # Carrying out the prediction by hand shows it is an
+    # alternating sum of the first sequence elements.
+    return sum(ds[0] * (+1 if (idx % 2 == 0) else -1)
+               for idx, ds in enumerate(diff_seq))
+
+
 def parse_input(input_data: str) -> list[list[int]]:
     """Parse input data, returning a list of lists of ints."""
     lines = input_data.splitlines()
@@ -34,8 +43,8 @@ def part_a(input_data: str) -> int:
 
 def part_b(input_data: str) -> int:
     """Given the puzzle input data, return the solution for part B."""
-
-    return "Solution not implemented"
+    seqs = parse_input(input_data)
+    return sum(predict_b(seq) for seq in seqs)
 
 
 if __name__ == '__main__':
