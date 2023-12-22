@@ -16,7 +16,9 @@ sample_solution_b = "Sample solution not entered"
 
 def test_part_a():
     """Test the solution on sample data for part A."""
-    for data, pred in zip(sample_input_data, sample_data_predictions_a):
+    lines = sample_input_data.splitlines()
+    test_seqs = [[int(x) for x in line.split()] for line in lines]
+    for data, pred in zip(test_seqs, sample_data_predictions_a):
         assert day09.predict_a(data) == pred
     assert day09.part_a(sample_input_data) == sample_solution_a
 
