@@ -3,18 +3,21 @@
 from aocd.models import Puzzle
 import numpy as np
 
-def predict_a(sequence: list[int]) -> int:
-    """Predict the next element in the sequence according to Part One's specifications."""
-    # list of derived sequences
-    seqlist = [np.array(sequence)]
-    # while the last derived sequence is not all zeros,
-    while any(seqlist[-1]):
-        # append a new derived sequence made of the last one's differences
-        last_seq = seqlist[-1]
+def diff_sequences(seq: list[int]) -> list[np.ndarray]:
+    """Return successive lists of differences of sequence elements
+    up until and including the earliest list of only zeroes."""
+    diff_seqlist = [np.array(seq)]
+    while any(diff_seqlist[-1]):
+        last_seq = diff_seqlist[-1]
         diffs = last_seq[1:] - last_seq[:-1]
-        seqlist.append(diffs)
-    # sum the last elements of each derived sequence to obtain the prediction
-    return sum(s[-1] for s in seqlist)
+        diff_seqlist.append(diffs)
+    return diff_seqlist
+
+
+def predict_a(seq: list[int]) -> int:
+    """Predict the next element in the sequence according to Part One's specifications."""
+    diff_seq = diff_sequences(seq)
+    return sum(ds[-1] for ds in diff_seq)
 
 
 def parse_input(input_data: str) -> list[list[int]]:
