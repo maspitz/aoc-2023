@@ -3,15 +3,21 @@
 import day09
 
 # Test data given as a multiline string.
-sample_input_data = """Sample data not entered"""
+sample_input_data = """0 3 6 9 12 15
+1 3 6 10 15 21
+10 13 16 21 30 45"""
 
-sample_solution_a = "Sample solution not entered"
+sample_data_predictions_a = [18, 28, 68]
+
+sample_solution_a = 114
 
 sample_solution_b = "Sample solution not entered"
 
 
 def test_part_a():
     """Test the solution on sample data for part A."""
+    for data, pred in zip(sample_input_data, sample_data_predictions_a):
+        assert day09.predict_a(data) == pred
     assert day09.part_a(sample_input_data) == sample_solution_a
 
 
